@@ -1,0 +1,25 @@
+# this is the list of the containers that you are creating
+services:
+
+  # this is a single container you are creating -> this is under the name "database"
+  database:
+
+    # the image is a pre-configured postgres server, this is so you do not have to set it up yourself!
+    image: 'postgres:latest'
+
+    # this first port is the port on you computer, the second port is the port on the virtual computer
+    # this is so when a request is made to your real computer it know where to send the request on the virtual one!
+    ports:
+      - 5432:5432
+
+    # the env settings are thing you can set on your virtual server to configure how it acts
+    # in this case we are setting some db settings
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: default
+
+    # this is where we are soring the database files on our real computer
+    # this links the db data to a file on your real pc!
+    volumes:
+      - ./database/:/var/lib/postgresql/data/
