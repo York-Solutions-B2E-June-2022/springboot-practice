@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -44,13 +45,23 @@ public class ContactController {
 
     // Update (U) part of crud
     @GetMapping("/updatePhoneNumber") // the name for the request param must match the name for the url variable!
-    public void updatePhoneNumber(@RequestParam String name, @RequestParam String newNumber) {
-        service.updatePhoneNumber(name, newNumber);
+    public void updatePhoneNumber(@RequestParam Long id, @RequestParam String newNumber) {
+        service.updatePhoneNumber(id, newNumber);
     }
 
     // Delete (D) part of crud
     @GetMapping("/delete") // <-- the endpoint for this request would be http://localhost:8080/delete?name=adam
-    public void deleteContact(@RequestParam String name) {
-        service.delete(name);
+    public void deleteContact(@RequestParam Long id) {
+        service.delete(id);
+    }
+
+    @GetMapping("/getByName")
+    public ArrayList<ContactEntity> getByName(@RequestParam String name) {
+        return service.getByName(name);
+    }
+
+    @GetMapping("/getByPhoneNumber")
+    public ArrayList<ContactEntity> getByPhoneNumber(@RequestParam String phoneNumber) {
+        return service.getByPhoneNumber(phoneNumber);
     }
 }

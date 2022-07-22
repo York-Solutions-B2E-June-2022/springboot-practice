@@ -1,8 +1,11 @@
 package net.yorksolutions.springpractice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 // A service is a place to store all the logic for a controller
@@ -33,12 +36,32 @@ public class ContactService {
         return repository.findById(id);
     }
 
-    public void updatePhoneNumber(String name, String newNumber) {
-        // update a contacts phone number in the database
+    public void updatePhoneNumber(Long id, String newNumber) {
+        Optional<ContactEntity> contactOpt = repository.findById(id);
+        if (contactOpt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        ContactEntity contact = contactOpt.get();
+        contact.phoneNumber = newNumber;
+        repository.save(contact);
     }
 
-    public void delete(String name) {
-        // delete a contact from the database
+    public void delete(Long id) {
+        Optional<ContactEntity> contactOpt = repository.findById(id);
+        if (contactOpt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        repository.delete(contactOpt.get());
+    }
+
+    public ArrayList<ContactEntity> getByName(String name) {
+        return repository.findByName(name);
+    }
+
+    public ArrayList<ContactEntity> getByPhoneNumber(String phoneNumber) {
+        return repository.findByPhoneNumber(phoneNumber);
     }
 
 }
