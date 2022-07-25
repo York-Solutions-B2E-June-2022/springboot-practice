@@ -1,4 +1,4 @@
-package net.yorksolutions.springpractice;
+package net.yorksolutions.springpractice.contact;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +34,8 @@ public class ContactController {
 
     // Read (R) part of crud
     @GetMapping("/list") // <-- the endpoint for this mapping is http://localhost:8080/contacts/list
-    public Iterable<ContactEntity> listContacts() {
-        return service.list();
+    public Iterable<ContactEntity> listContacts(@RequestParam String username, @RequestParam String password) {
+        return service.list(username, password);
     }
 
     @GetMapping("/get")
@@ -63,5 +63,10 @@ public class ContactController {
     @GetMapping("/getByPhoneNumber")
     public ArrayList<ContactEntity> getByPhoneNumber(@RequestParam String phoneNumber) {
         return service.getByPhoneNumber(phoneNumber);
+    }
+
+    @GetMapping("/getNameAndPhoneNumber")
+    public ArrayList<ContactEntity> getByPhoneNumber(@RequestParam String name, @RequestParam String phoneNumber) {
+        return service.getByNameAndPhoneNumber(name, phoneNumber);
     }
 }

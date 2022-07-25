@@ -1,4 +1,4 @@
-package net.yorksolutions.springpractice;
+package net.yorksolutions.springpractice.contact;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,7 +28,9 @@ public class ContactEntity {
     String name;
 
     @JsonProperty
-    String phoneNumber;
+    String phoneNumber; // -> phone_number
+//    String phonenumber; // -> phonenumber
+//    String phone_number; // -> phone_number
 
     // if you have a constructor for you class spring boot needs you also define a
     // "no args" constructor, so it can do what it needs to do in the background.
